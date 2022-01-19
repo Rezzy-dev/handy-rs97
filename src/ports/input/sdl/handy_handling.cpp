@@ -85,10 +85,10 @@ uint32_t dpad_pressed[4] = {0, 0, 0, 0};
 #define BT_UP       SDLK_UP
 #define BT_DOWN     SDLK_DOWN
 #define BT_PAUSE    SDLK_RETURN      // START
-#define BT_A        SDLK_LCTRL       // A
-#define BT_B        SDLK_LALT        // B
-#define BT_OPT1     SDLK_LSHIFT      // Y
-#define BT_OPT2     SDLK_SPACE       // X
+#define BT_A        SDLK_LALT        // A
+#define BT_B        SDLK_LCTRL       // B
+#define BT_OPT1     SDLK_SPACE       // Y
+#define BT_OPT2     SDLK_LSHIFT      // X
 #define BT_OFF      SDLK_ESCAPE      // SELECT
 
 uint32_t Joystick_Down(uint32_t mask, SDL_Event event)
