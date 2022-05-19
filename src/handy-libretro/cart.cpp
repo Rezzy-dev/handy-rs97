@@ -132,37 +132,36 @@ CCart::CCart(UBYTE *gamedata,ULONG gamesize)
 
    // Set the filetypes
 
-   //CTYPE banktype0;
-   CTYPE banktype1 = UNUSED;
+   CTYPE banktype0, banktype1;
 
    switch(header.page_size_bank0)
    {
       case 0x000:
-         /*banktype0=UNUSED;*/
+         banktype0=UNUSED;
          mMaskBank0=0;
          mShiftCount0=0;
          mCountMask0=0;
          break;
       case 0x100:
-         /*banktype0=C64K;*/
+         banktype0=C64K;
          mMaskBank0=0x00ffff;
          mShiftCount0=8;
          mCountMask0=0x0ff;
          break;
       case 0x200:
-         /*banktype0=C128K;*/
+         banktype0=C128K;
          mMaskBank0=0x01ffff;
          mShiftCount0=9;
          mCountMask0=0x1ff;
          break;
       case 0x400:
-         /*banktype0=C256K;*/
+         banktype0=C256K;
          mMaskBank0=0x03ffff;
          mShiftCount0=10;
          mCountMask0=0x3ff;
          break;
       case 0x800:
-         /*banktype0=C512K;*/
+         banktype0=C512K;
          mMaskBank0=0x07ffff;
          mShiftCount0=11;
          mCountMask0=0x7ff;
@@ -241,26 +240,33 @@ CCart::CCart(UBYTE *gamedata,ULONG gamesize)
          mCartBank0,
          gamedata+(headersize),
          bank0size);
-   cartsize = cartsize < bank0size ? 0 : cartsize - bank0size;
+
+   //cartsize = cartsize < bank0size ? 0 : cartsize - bank0size;
 
    memcpy(
          mCartBank1,
          gamedata+(headersize + bank0size),
-         cartsize < bank1size ? cartsize : bank1size);
-   cartsize = cartsize < bank1size ? 0 : cartsize - bank1size;
+         bank1size);
+         //cartsize < bank1size ? cartsize : bank1size);
+
+  // cartsize = cartsize < bank1size ? 0 : cartsize - bank1size;
    
    if(mAudinFlag){// TODO clean up code
       memcpy(
 		mCartBank0A,
-		gamedata+(headersize+ bank0size + bank1size),
-		 cartsize < bank0size ? cartsize : bank0size);
-      cartsize = cartsize < bank0size ? 0 : cartsize - bank0size;
+		gamedata+(headersize + bank0size + bank1size),
+		bank0size);
+		//cartsize < bank0size ? cartsize : bank0size);
+
+      //cartsize = cartsize < bank0size ? 0 : cartsize - bank0size;
       
       memcpy(
 		mCartBank1A,
 		gamedata+(headersize + bank0size + bank1size + bank0size),
-		cartsize < bank1size ? cartsize : bank1size);
-      cartsize = cartsize < bank1size ? 0 : cartsize - bank1size;
+		bank1size);
+		//cartsize < bank1size ? cartsize : bank1size);
+ 
+     //cartsize = cartsize < bank1size ? 0 : cartsize - bank1size;
    }
 
    if( bank0size==0) bank0size=1;// workaround ...
@@ -315,39 +321,39 @@ CCart::CCart(UBYTE *gamedata,ULONG gamesize)
 	else
 		Invert = 0;
 	
-	printf("\n Game CRC : 0x%x\n", mycrc);
+	printf("\n Game CRC : %x\n", mycrc);
 	
 	/* Some games don't have a proper header or have incorrect controls. */
 	
 	switch(mycrc)
 	{
 		/* Klax , Rotate to the left */
-		case 0xec53a878:
-		case 0xA53649F1:
-		case 0xEEBADBE6:
-		case 0x4D5D94F4:
+		case 0x0ec53a878:
+		//case 0x0A53649F1:
+		//case 0x0EEBADBE6:
+		//case 0x04D5D94F4:
 		/* Gauntlet , Rotate to the left */
-		case 0x8e0908e5:
-		case 0xc291dd38:
-		case 0x7f0ec7ad:
+		case 0x08e0908e5:
+		//case 0x0c291dd38:
+		//case 0x07f0ec7ad:
 			mRotation = CART_ROTATE_LEFT;
 			Invert = 2;
 		break;
 		
 		/* NFL Football , Rotate to the right */
-		case 0xc398359e:
-		case 0x6fd398:
+		case 0x0c398359e:
+		//case 0x06fd398:
 		/* Centipede (Retail) , Rotate to the right */
-		case 0xe38a0f69:
+		case 0x0e38a0f69:
 		/* Centipede (Prototype) , Rotate to the right */
-		case 0x71a2e46:
-		case 0x97501709:
+		case 0x071a2e46:
+		//case 0x097501709:
 		/* Lexis , Rotate to the right */
-		case 0x265710ce:
-		case 0x271b6e9:
+		case 0x0265710ce:
+		//case 0x0271b6e9:
 		
-		/* Raiden */
-		case 0xbcd10c3a:
+		/* Raiden , Rotate to the right */
+		case 0x0bcd10c3a:
 			mRotation = CART_ROTATE_RIGHT;
 			Invert = 1;
 		break;
