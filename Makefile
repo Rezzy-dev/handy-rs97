@@ -4,7 +4,7 @@ CXX 		= /opt/miyoo-toolchain/bin/arm-buildroot-linux-musleabi-g++
 
 PORT = RS97
 SOUND_OUTPUT = alsa
-PROFILE = APPLY
+PROFILE = 0
 
 SRCDIR		= ./src/ ./src/gui/ ./src/handy-libretro src/ports ./src/ports/input/sdl src/sdlemu ./src/unzip
 VPATH		= $(SRCDIR)
